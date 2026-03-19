@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="OpenXRMlPlaneDetector" inherits="Node" experimental="Marked as experimental due to lack of community validation on Magic Leap devices." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Represents a plane detector in Magic Leap's Plane Detection API.
+	</brief_description>
+	<description>
+		Represents a plane detector in Magic Leap's Plane Detection API.
+		A plane detector detects plane types as specified by the [member settings] property. To create different flavours of plane detection, an application may create multiple plane detectors.
+		The plane detector is only active when added to the scene tree.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_plane_trackers" qualifiers="const">
+			<return type="OpenXRMlPlaneTracker[]" />
+			<description>
+				Gets the currently tracked planes.
+			</description>
+		</method>
+		<method name="get_status" qualifiers="const">
+			<return type="int" enum="OpenXRMlPlaneDetector.Status" />
+			<description>
+				Gets the status of the plane detector.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="settings" type="OpenXRMlPlaneDetectorSettings" setter="set_settings" getter="get_settings">
+			The settings of the plane detector.
+			Changing this value or any of the properties of the detector settings will restart the plane detector.
+		</member>
+		<member name="detection_enabled" type="bool" setter="set_detection_enabled" getter="get_detection_enabled" >
+			The detection enabled flag determines whether planed detection is enabled (true) or not (false).
+		</member>
+		<member name="contour_bit" type="bool" setter="set_contour_bit" getter="get_contour_bit" >
+			The contour bit determines whether contour information is returned by the detector (true) or not (false).
+		</member>
+	</members>
+	<constants>
+		<constant name="PLANE_DETECTION_STATE_NONE" value="0" enum="Status">
+			The plane detector is idle.
+		</constant>
+		<constant name="PLANE_DETECTION_STATE_PENDING" value="1" enum="Status">
+			The plane detector is performing plane detection.
+		</constant>
+		<constant name="PLANE_DETECTION_STATE_DONE" value="2" enum="Status">
+			The plane detector has finished plane detection and is ready to be inspected.
+		</constant>
+		<constant name="PLANE_DETECTION_STATE_ERROR" value="3" enum="Status">
+			The plane detector has encountered an error.
+		</constant>
+		<constant name="PLANE_DETECTION_STATE_FATAL" value="4" enum="Status">
+			The plane detector has encountered a fatal error.
+		</constant>
+		<constant name="PLANE_DETECTION_STATE_MAX_ENUM" value="5" enum="Status">
+			Maximum value for the plane detector status enum.
+		</constant>
+	</constants>
+</class>
