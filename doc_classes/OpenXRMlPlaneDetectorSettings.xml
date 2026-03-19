@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="OpenXRMlPlaneDetectorSettings" inherits="Resource" experimental="Marked as experimental due to lack of community validation on Magic Leap devices." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Plane detector settings for the [OpenXRMlPlaneDetector].
+	</brief_description>
+	<description>
+		Plane detector settings for the [OpenXRMlPlaneDetector].
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_orientations">
+			<return type="Array" />
+			<description>
+				Gets the array of orientations of type [OpenXRMlPlaneTracker.PlaneOrientation] to be tracked by the [OpenXRMlPlaneDetector].
+			</description>
+		</method>
+		<method name="get_orientations_count" qualifiers="const">
+			<return type="int" />
+			<description>
+				Gets the number of orientations to be tracked by the [OpenXRMlPlaneDetector].
+			</description>
+		</method>
+		<method name="get_semantic_types">
+			<return type="Array" />
+			<description>
+				Gets the array of semantic types of type [OpenXRMlPlaneTracker.PlaneSemanticType] to be tracked by the [OpenXRMlPlaneDetector].
+			</description>
+		</method>
+		<method name="get_semantic_types_count" qualifiers="const">
+			<return type="int" />
+			<description>
+				Gets the number of semantic types to be tracked by the [OpenXRMlPlaneDetector].
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="orientation_flags" type="int" setter="set_orientation_flags" getter="get_orientations_flags" default="0">
+		The orientations [enum OpenXRMlPlaneTracker.PlaneOrientation] to be detected by the [OpenXRMlPlaneDetector].
+		</member>
+		<member name="semantic_type_flags" type="int" setter="set_semantic_type_flags" getter="get_semantic_type_flags" default="0">
+			The semantic types [enum OpenXRMlPlaneTracker.PlaneSemanticType] to be detected by the [OpenXRMlPlaneDetector].
+		</member>
+		<member name="max_planes" type="int" setter="set_max_planes" getter="get_max_planes" default="50">
+			The maxiumum number of planes to be detected by the [OpenXRMlPlaneDetector].
+		</member>
+		<member name="min_area" type="float" setter="set_min_area" getter="get_min_area" default="0.05">
+			The minimum area in meters [m] of planes to be detected by the [OpenXRMlPlaneDetector].
+		</member>
+	</members>
+	
+</class>

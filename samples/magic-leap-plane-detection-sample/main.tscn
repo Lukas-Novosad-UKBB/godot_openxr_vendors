@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cqsodpswgup8w"]
+
+[ext_resource type="Script" uid="uid://rkp4t7eqnc0o" path="res://main.gd" id="1_fsva1"]
+[ext_resource type="PackedScene" uid="uid://ctaejfkxghmda" path="res://plane_tracker_display.tscn" id="5_lquwl"]
+
+[sub_resource type="OpenXRMlPlaneDetectorSettings" id="OpenXRMlPlaneDetectorSettings_lquwl"]
+orientation_flags = 15
+semantic_type_flags = 31
+
+[node name="Main" type="Node3D" unique_id=1769434921]
+script = ExtResource("1_fsva1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1099945851]
+transform = Transform3D(0.677077, -0.692092, 0.25015, 0.264251, 0.545897, 0.79509, -0.686831, -0.472235, 0.552501, 0, 0, 0)
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1310246270]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=752979072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.352791, 0)
+
+[node name="OpenXRMlPlaneDetectionManager" type="OpenXRMlPlaneDetectionManager" parent="XROrigin3D" unique_id=128138369]
+scene = ExtResource("5_lquwl")
+
+[node name="OpenXRMlPlaneDetector" type="OpenXRMlPlaneDetector" parent="XROrigin3D" unique_id=1454967791]
+settings = SubResource("OpenXRMlPlaneDetectorSettings_lquwl")
+detection_enabled = true
