@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  openxr_ml_plane_detection_manager.h                                   */
+/*  openxr_ext_plane_detector_settings.h                                  */
 /**************************************************************************/
 /*                       This file is part of:                            */
 /*                              GODOT XR                                  */
@@ -30,61 +30,44 @@
 #pragma once
 
 #include <openxr/openxr.h>
-#include <godot_cpp/classes/node.hpp>
-#include <godot_cpp/classes/packed_scene.hpp>
-#include <godot_cpp/classes/xr_anchor3d.hpp>
-#include <godot_cpp/classes/xr_origin3d.hpp>
-#include <godot_cpp/core/binder_common.hpp>
-#include <godot_cpp/core/defs.hpp>
-#include <godot_cpp/templates/hash_map.hpp>
+#include <godot_cpp/classes/resource.hpp>
 
-#include "classes/openxr_ml_plane_tracker.h"
+#include "classes/openxr_ext_plane_tracker.h"
 
 namespace godot {
-class OpenXRMlPlaneDetectionManager : public Node {
-	GDCLASS(OpenXRMlPlaneDetectionManager, Node);
+
+class OpenXRExtPlaneDetectorSettings : public Resource {
+	GDCLASS(OpenXRExtPlaneDetectorSettings, Resource);
 
 private:
-	Ref<PackedScene> scene;
-	StringName scene_setup_method = "setup_scene";
-	bool visible = true;
-
-	XROrigin3D *xr_origin = nullptr;
-
-	struct Anchor {
-		ObjectID node;
-		Ref<OpenXRMlPlaneTracker> entity;
-
-		Anchor(Node *p_node, const Ref<OpenXRMlPlaneTracker> &p_entity) {
-			node = p_node->get_instance_id();
-			entity = p_entity;
-		}
-		Anchor() {}
-	};
-	HashMap<StringName, Anchor> anchors;
-
-	void _cleanup_anchors();
-	void _add_tracker(const Ref<OpenXRMlPlaneTracker> &p_tracker);
-	void _on_tracker_added(const StringName &p_tracker_name, XRServer::TrackerType p_tracker_type);
-	void _on_tracker_removed(const StringName &p_tracker_name, XRServer::TrackerType p_tracker_type);
+	uint32_t orientation_flags = 0;
+	Vector<OpenXRExtPlaneTracker::PlaneOrientation> orientations;
+	uint32_t semantic_type_flags = 0;
+	Vector<OpenXRExtPlaneTracker::PlaneSemanticType> semantic_types;
+	uint32_t max_planes = 50;
+	float min_area = 0.05;
+	//XrPosef bounding_box_pose = ;
+	//XrExtent3DfEXT bounding_box_extent;
 
 protected:
 	static void _bind_methods();
 
-	void _notification(int p_what);
-
 public:
-	PackedStringArray _get_configuration_warnings() const override;
+	OpenXRExtPlaneDetectorSettings() = default;
 
-	void set_scene(const Ref<PackedScene> &p_scene);
-	Ref<PackedScene> get_scene() const;
+	void set_orientation_flags(uint32_t p_orientation_flags);
+	uint32_t get_orientation_flags() const;
+	Vector<OpenXRExtPlaneTracker::PlaneOrientation> get_orientations();
 
-	void set_scene_setup_method(const StringName &p_method);
-	StringName get_scene_setup_method() const;
+	void set_semantic_type_flags(uint32_t p_semantic_type_flags);
+	uint32_t get_semantic_type_flags() const;
+	Vector<OpenXRExtPlaneTracker::PlaneSemanticType> get_semantic_types();
 
-	void set_visible(bool p_visible);
-	bool get_visible() const;
-	void show();
-	void hide();
+	void set_max_planes(uint32_t p_max_planes);
+	uint32_t get_max_planes() const;
+
+	void set_min_area(float p_min_area);
+	float get_min_area() const;
 };
+
 } // namespace godot

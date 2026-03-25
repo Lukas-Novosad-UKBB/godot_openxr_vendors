@@ -1,5 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<class name="OpenXRMlPlaneDetectionExtension" inherits="OpenXRExtensionWrapper" experimental="Marked as experimental due to lack of community validation on Magic Leap devices." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<class name="OpenXRExtPlaneDetectionExtension" inherits="OpenXRExtensionWrapper"
+	experimental="Marked as experimental due to lack of community validation on devices such as the Magic Leap."
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
 		Wraps the [code]XR_EXT_plane_detection[/code] extension.
 	</brief_description>
@@ -20,7 +23,7 @@
 		<signal name="updating_plane_detectors">
 			<param index="0" name="time" type="int" />
 			<description>
-				Emitted on every valid XR frame so that [OpenXRMlPlaneDetector] instances can update their state based on the time elapsed since the last frame.
+				Emitted on every valid XR frame so that [OpenXRExtPlaneDetector] instances can update their state based on the time elapsed since the last frame.
 			</description>
 		</signal>
 	</signals>

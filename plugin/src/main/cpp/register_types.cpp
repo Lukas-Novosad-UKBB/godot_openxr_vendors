@@ -100,7 +100,7 @@
 #include "extensions/openxr_ml_marker_understanding_extension.h"
 #include "extensions/openxr_session_helper_extension.h"
 // LuNo: added
-#include "extensions/openxr_ml_plane_detection_extension.h"
+#include "extensions/openxr_ext_plane_detection_extension.h"
 #include "extensions/openxr_stationary_reference_space_extension.h"
 
 #include "classes/openxr_android_anchor_tracker.h"
@@ -134,10 +134,10 @@
 #include "classes/openxr_ml_marker_tracker.h"
 #include "classes/openxr_ml_marker_understanding_manager.h"
 // LuNo: added
-#include "classes/openxr_ml_plane_detection_manager.h"
-#include "classes/openxr_ml_plane_detector.h"
-#include "classes/openxr_ml_plane_detector_settings.h"
-#include "classes/openxr_ml_plane_tracker.h"
+#include "classes/openxr_ext_plane_detection_manager.h"
+#include "classes/openxr_ext_plane_detector.h"
+#include "classes/openxr_ext_plane_detector_settings.h"
+#include "classes/openxr_ext_plane_tracker.h"
 #include "classes/openxr_vendor_performance_metrics.h"
 #include "classes/openxr_vendor_performance_metrics_provider.h"
 
@@ -241,7 +241,7 @@ void initialize_plugin_module(ModuleInitializationLevel p_level) {
 			GDREGISTER_CLASS(OpenXRHtcPassthroughExtension);
 			GDREGISTER_CLASS(OpenXRMlMarkerUnderstandingExtension);
 			// LuNo: added
-			GDREGISTER_CLASS(OpenXRMlPlaneDetectionExtension);
+			GDREGISTER_CLASS(OpenXRExtPlaneDetectionExtension);
 			GDREGISTER_CLASS(OpenXRFbSpaceWarpExtension);
 			GDREGISTER_CLASS(OpenXRMetaEnvironmentDepthExtension);
 			GDREGISTER_CLASS(OpenXRAndroidEnvironmentDepthExtension);
@@ -350,6 +350,11 @@ void initialize_plugin_module(ModuleInitializationLevel p_level) {
 			}
 #endif // META_HEADERS_ENABLED
 
+			// LuNo: added
+			if (_get_bool_project_setting("xr/openxr/extensions/plane_detection")) {
+				_register_extension_with_openxr(OpenXRExtPlaneDetectionExtension::get_singleton());
+			}
+
 			if (_get_bool_project_setting("xr/openxr/extensions/meta/colocation_discovery")) {
 				_register_extension_with_openxr(OpenXRMetaColocationDiscoveryExtension::get_singleton());
 			}
@@ -372,11 +377,6 @@ void initialize_plugin_module(ModuleInitializationLevel p_level) {
 
 			if (_get_bool_project_setting("xr/openxr/extensions/magic_leap/marker_understanding")) {
 				_register_extension_with_openxr(OpenXRMlMarkerUnderstandingExtension::get_singleton());
-			}
-
-			// LuNo: added
-			if (_get_bool_project_setting("xr/openxr/extensions/magic_leap/plane_detection")) {
-			 	_register_extension_with_openxr(OpenXRMlPlaneDetectionExtension::get_singleton());
 			}
 
 			if (_get_bool_project_setting("xr/openxr/extensions/androidxr/passthrough_camera_state")) {
@@ -462,7 +462,7 @@ void initialize_plugin_module(ModuleInitializationLevel p_level) {
 			_register_extension_as_singleton(OpenXRHtcPassthroughExtension::get_singleton());
 			_register_extension_as_singleton(OpenXRMlMarkerUnderstandingExtension::get_singleton());
 			// LuNo: added
-			_register_extension_as_singleton(OpenXRMlPlaneDetectionExtension::get_singleton());
+			_register_extension_as_singleton(OpenXRExtPlaneDetectionExtension::get_singleton());
 			_register_extension_as_singleton(OpenXRAndroidEyeTrackingExtension::get_singleton());
 			_register_extension_as_singleton(OpenXRAndroidFaceTrackingExtension::get_singleton());
 			_register_extension_as_singleton(OpenXRAndroidLightEstimationExtension::get_singleton());
@@ -525,10 +525,10 @@ void initialize_plugin_module(ModuleInitializationLevel p_level) {
 			GDREGISTER_CLASS(OpenXRMlMarkerDetectorUpcASettings);
 			GDREGISTER_CLASS(OpenXRMlMarkerUnderstandingManager);
 			// LuNo: added
-			GDREGISTER_CLASS(OpenXRMlPlaneDetectionManager);
-			GDREGISTER_CLASS(OpenXRMlPlaneTracker);
-			GDREGISTER_CLASS(OpenXRMlPlaneDetector);
-			GDREGISTER_CLASS(OpenXRMlPlaneDetectorSettings);
+			GDREGISTER_CLASS(OpenXRExtPlaneDetectionManager);
+			GDREGISTER_CLASS(OpenXRExtPlaneTracker);
+			GDREGISTER_CLASS(OpenXRExtPlaneDetector);
+			GDREGISTER_CLASS(OpenXRExtPlaneDetectorSettings);
 
 			GDREGISTER_CLASS(OpenXRHybridApp);
 			Engine::get_singleton()->register_singleton("OpenXRHybridApp", OpenXRHybridApp::get_singleton());
@@ -639,6 +639,9 @@ void add_plugin_project_settings() {
 		hybrid_app_launch_mode_property_info["hint_string"] = "Start As Immersive:0,Start As Panel:1";
 		project_settings->add_property_info(hybrid_app_launch_mode_property_info);
 	}
+
+	// LuNo: added
+	_add_bool_project_setting(project_settings, "xr/openxr/extensions/plane_detection", false);
 
 	_add_bool_project_setting(project_settings, "xr/openxr/extensions/vendor_performance_metrics", false);
 	_add_bool_project_setting(project_settings, "xr/openxr/extensions/vendor_performance_metrics/capture_on_startup", true);

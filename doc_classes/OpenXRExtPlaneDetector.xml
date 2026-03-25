@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<class name="OpenXRMlPlaneDetector" inherits="Node" experimental="Marked as experimental due to lack of community validation on Magic Leap devices." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<class name="OpenXRExtPlaneDetector" inherits="Node"
+	experimental="Marked as experimental due to lack of community validation on devices such as the Magic Leap."
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-		Represents a plane detector in Magic Leap's Plane Detection API.
+		Represents a plane detector the XR_EXT_plane_detection extension.
 	</brief_description>
 	<description>
-		Represents a plane detector in Magic Leap's Plane Detection API.
+		Represents a plane detector in for the XR_EXT_plane_detection extension.
 		A plane detector detects plane types as specified by the [member settings] property. To create different flavours of plane detection, an application may create multiple plane detectors.
 		The plane detector is only active when added to the scene tree.
 	</description>
@@ -12,27 +15,29 @@
 	</tutorials>
 	<methods>
 		<method name="get_plane_trackers" qualifiers="const">
-			<return type="OpenXRMlPlaneTracker[]" />
+			<return type="OpenXRExtPlaneTracker[]" />
 			<description>
 				Gets the currently tracked planes.
 			</description>
 		</method>
 		<method name="get_status" qualifiers="const">
-			<return type="int" enum="OpenXRMlPlaneDetector.Status" />
+			<return type="int" enum="OpenXRExtPlaneDetector.Status" />
 			<description>
 				Gets the status of the plane detector.
 			</description>
 		</method>
 	</methods>
 	<members>
-		<member name="settings" type="OpenXRMlPlaneDetectorSettings" setter="set_settings" getter="get_settings">
+		<member name="settings" type="OpenXRExtPlaneDetectorSettings" setter="set_settings"
+			getter="get_settings">
 			The settings of the plane detector.
 			Changing this value or any of the properties of the detector settings will restart the plane detector.
 		</member>
-		<member name="detection_enabled" type="bool" setter="set_detection_enabled" getter="get_detection_enabled" >
+		<member name="detection_enabled" type="bool" setter="set_detection_enabled"
+			getter="get_detection_enabled">
 			The detection enabled flag determines whether planed detection is enabled (true) or not (false).
 		</member>
-		<member name="contour_bit" type="bool" setter="set_contour_bit" getter="get_contour_bit" >
+		<member name="contour_bit" type="bool" setter="set_contour_bit" getter="get_contour_bit">
 			The contour bit determines whether contour information is returned by the detector (true) or not (false).
 		</member>
 	</members>

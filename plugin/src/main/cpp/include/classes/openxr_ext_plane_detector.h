@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  openxr_ml_plane_detector.h                                            */
+/*  openxr_ext_plane_detector.h                                           */
 /**************************************************************************/
-/*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                       This file is part of:                            */
+/*                              GODOT XR                                  */
+/*                      https://godotengine.org                           */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2022-present Godot XR contributors (see CONTRIBUTORS.md) */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -35,36 +34,34 @@
 #include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/variant/typed_array.hpp>
 
-#include "classes/openxr_ml_plane_detector_settings.h"
-#include "classes/openxr_ml_plane_tracker.h"
+#include "classes/openxr_ext_plane_detector_settings.h"
+#include "classes/openxr_ext_plane_tracker.h"
 
 namespace godot {
 
-class OpenXRMlPlaneDetector : public Node {
-	GDCLASS(OpenXRMlPlaneDetector, Node);
+class OpenXRExtPlaneDetector : public Node {
+	GDCLASS(OpenXRExtPlaneDetector, Node);
 
 public:
-
 	// similar to the enum XrPlaneDetectionStateEXT from XR_EXT_plane_detection
-	enum  Status {
-    	PLANE_DETECTION_STATE_NONE,
-    	PLANE_DETECTION_STATE_PENDING,
-    	PLANE_DETECTION_STATE_DONE,
-    	PLANE_DETECTION_STATE_ERROR,
-    	PLANE_DETECTION_STATE_FATAL,
-    	PLANE_DETECTION_STATE_MAX_ENUM
+	enum Status {
+		PLANE_DETECTION_STATE_NONE,
+		PLANE_DETECTION_STATE_PENDING,
+		PLANE_DETECTION_STATE_DONE,
+		PLANE_DETECTION_STATE_ERROR,
+		PLANE_DETECTION_STATE_FATAL,
+		PLANE_DETECTION_STATE_MAX_ENUM
 	};
 
 private:
-
 	Status status = Status::PLANE_DETECTION_STATE_NONE;
-	TypedArray<OpenXRMlPlaneTracker> plane_trackers;
+	TypedArray<OpenXRExtPlaneTracker> plane_trackers;
 	XrPlaneDetectorEXT plane_detector = nullptr;
 	bool detector_settings_dirty = false;
 	bool query_running = false;
 	bool detection_enabled = false;
 	bool contour_bit = true;
-	Ref<OpenXRMlPlaneDetectorSettings> settings;
+	Ref<OpenXRExtPlaneDetectorSettings> settings;
 
 	void _on_updating_plane_detectors(XrTime time);
 	void _on_settings_changed();
@@ -72,18 +69,17 @@ private:
 	void _destroy_plane_detector();
 	void _update_plane_detector(XrTime time);
 	void _notification(int p_what);
-	Ref<OpenXRMlPlaneTracker> get_or_create_plane_tracker_by_detector_location(XrPlaneDetectorLocationEXT p_detector_location);
+	Ref<OpenXRExtPlaneTracker> get_or_create_plane_tracker_by_detector_location(XrPlaneDetectorLocationEXT p_detector_location);
 
 protected:
 	static void _bind_methods();
 
 public:
-
 	Status get_status() const;
-	TypedArray<OpenXRMlPlaneTracker> get_plane_trackers() const;
+	TypedArray<OpenXRExtPlaneTracker> get_plane_trackers() const;
 
-	void set_settings(const Ref<OpenXRMlPlaneDetectorSettings> &p_settings);
-	Ref<OpenXRMlPlaneDetectorSettings> get_settings() const;
+	void set_settings(const Ref<OpenXRExtPlaneDetectorSettings> &p_settings);
+	Ref<OpenXRExtPlaneDetectorSettings> get_settings() const;
 
 	void set_detection_enabled(bool p_detection_enabled);
 	bool get_detection_enabled() const;
@@ -94,4 +90,4 @@ public:
 
 } // namespace godot
 
-VARIANT_ENUM_CAST(OpenXRMlPlaneDetector::Status);
+VARIANT_ENUM_CAST(OpenXRExtPlaneDetector::Status);

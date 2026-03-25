@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  openxr_ml_plane_detection_extension.h                                 */
+/*  openxr_ext_plane_detection_extension.h                                */
 /**************************************************************************/
-/*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                       This file is part of:                            */
+/*                              GODOT XR                                  */
+/*                      https://godotengine.org                           */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2022-present Godot XR contributors (see CONTRIBUTORS.md) */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -39,18 +38,18 @@
 
 using namespace godot;
 
-// Wrapper for the Magic Leap Plane Detection extension.
-class OpenXRMlPlaneDetectionExtension : public OpenXRExtensionWrapper {
-	GDCLASS(OpenXRMlPlaneDetectionExtension, OpenXRExtensionWrapper);
+// Wrapper for the XR_EXT_plane_detection extension.
+class OpenXRExtPlaneDetectionExtension : public OpenXRExtensionWrapper {
+	GDCLASS(OpenXRExtPlaneDetectionExtension, OpenXRExtensionWrapper);
 
 protected:
 	static void _bind_methods();
 
 public:
-	static OpenXRMlPlaneDetectionExtension *get_singleton();
+	static OpenXRExtPlaneDetectionExtension *get_singleton();
 
-	OpenXRMlPlaneDetectionExtension();
-	~OpenXRMlPlaneDetectionExtension();
+	OpenXRExtPlaneDetectionExtension();
+	~OpenXRExtPlaneDetectionExtension();
 
 	godot::Dictionary _get_requested_extensions(uint64_t p_xr_version) override;
 
@@ -68,14 +67,14 @@ public:
 	XrPlaneDetectorEXT create_plane_detector(const XrPlaneDetectorCreateInfoEXT *p_create_info);
 	bool begin_plane_detection(XrPlaneDetectorEXT p_plane_detector, const XrPlaneDetectorBeginInfoEXT *p_begin_info);
 	XrPlaneDetectionStateEXT get_plane_detector_status(XrPlaneDetectorEXT p_plane_detector);
-	bool get_plane_detections(XrPlaneDetectorEXT p_plane_detector, const XrPlaneDetectorGetInfoEXT* p_plane_get_info, XrPlaneDetectorLocationsEXT* p_plane_locations);
-	bool get_plane_polygon_buffer(XrPlaneDetectorEXT p_plane_detector, uint64_t p_plane_id, uint32_t p_plane_polygon_buffer_index, XrPlaneDetectorPolygonBufferEXT* p_plane_polygon_buffer);
+	bool get_plane_detections(XrPlaneDetectorEXT p_plane_detector, const XrPlaneDetectorGetInfoEXT *p_plane_get_info, XrPlaneDetectorLocationsEXT *p_plane_locations);
+	bool get_plane_polygon_buffer(XrPlaneDetectorEXT p_plane_detector, uint64_t p_plane_id, uint32_t p_plane_polygon_buffer_index, XrPlaneDetectorPolygonBufferEXT *p_plane_polygon_buffer);
 	void destroy_plane_detector(XrPlaneDetectorEXT p_plane_detector);
 
 	String get_plane_detection_state_string(XrPlaneDetectionStateEXT state);
 
 private:
-	static OpenXRMlPlaneDetectionExtension *singleton;
+	static OpenXRExtPlaneDetectionExtension *singleton;
 
 	// state
 	XrSystemPlaneDetectionPropertiesEXT plane_detection_system_properties;
@@ -96,5 +95,4 @@ private:
 	EXT_PROTO_XRRESULT_FUNC2(xrGetPlaneDetectionStateEXT, (XrPlaneDetectorEXT), p_planeDetector, (XrPlaneDetectionStateEXT *), p_state);
 	EXT_PROTO_XRRESULT_FUNC3(xrGetPlaneDetectionsEXT, (XrPlaneDetectorEXT), p_planeDetector, (const XrPlaneDetectorGetInfoEXT *), p_info, (XrPlaneDetectorLocationsEXT *), p_locations);
 	EXT_PROTO_XRRESULT_FUNC4(xrGetPlanePolygonBufferEXT, (XrPlaneDetectorEXT), p_planeDetector, (uint64_t), planeId, (uint32_t), polygonBufferIndex, (XrPlaneDetectorPolygonBufferEXT *), p_polygonBuffer);
-
 };

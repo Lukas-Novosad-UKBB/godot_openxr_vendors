@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  openxr_ml_plane_tracker.h                                             */
+/*  openxr_ext_plane_tracker.h                                            */
 /**************************************************************************/
-/*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                       This file is part of:                            */
+/*                              GODOT XR                                  */
+/*                      https://godotengine.org                           */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2022-present Godot XR contributors (see CONTRIBUTORS.md) */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -37,38 +36,36 @@
 
 namespace godot {
 
-class OpenXRMlPlaneTracker : public XRPositionalTracker {
-	GDCLASS(OpenXRMlPlaneTracker, XRPositionalTracker);
-	
-public:
+class OpenXRExtPlaneTracker : public XRPositionalTracker {
+	GDCLASS(OpenXRExtPlaneTracker, XRPositionalTracker);
 
+public:
 	// similar to enum XrPlaneDetectorOrientationEXT from XR_EXT_plane_detection
 	enum PlaneOrientation {
 		PLANE_ORIENTATION_HORIZONTAL_UPWARD,
-    	PLANE_ORIENTATION_HORIZONTAL_DOWNWARD,
-    	PLANE_ORIENTATION_VERTICAL,
-    	PLANE_ORIENTATION_ARBITRARY,
-    	PLANE_ORIENTATION_MAX_ENUM,
+		PLANE_ORIENTATION_HORIZONTAL_DOWNWARD,
+		PLANE_ORIENTATION_VERTICAL,
+		PLANE_ORIENTATION_ARBITRARY,
+		PLANE_ORIENTATION_MAX_ENUM,
 	};
 
 	// similar to enum XrPlaneDetectorSemanticTypeEXT from XR_EXT_plane_detection
 	enum PlaneSemanticType {
 		PLANE_SEMANTIC_TYPE_UNDEFINED,
-    	PLANE_SEMANTIC_TYPE_CEILING,
-    	PLANE_SEMANTIC_TYPE_FLOOR,
-    	PLANE_SEMANTIC_TYPE_WALL,
-    	PLANE_SEMANTIC_TYPE_PLATFORM,
-    	PLANE_SEMANTIC_TYPE_MAX_ENUM,
+		PLANE_SEMANTIC_TYPE_CEILING,
+		PLANE_SEMANTIC_TYPE_FLOOR,
+		PLANE_SEMANTIC_TYPE_WALL,
+		PLANE_SEMANTIC_TYPE_PLATFORM,
+		PLANE_SEMANTIC_TYPE_MAX_ENUM,
 	};
 
-	
-/* typedef XrFlags64 XrSpaceLocationFlags;
+	/* typedef XrFlags64 XrSpaceLocationFlags;
 
-// Flag bits for XrSpaceLocationFlags
-static const XrSpaceLocationFlags XR_SPACE_LOCATION_ORIENTATION_VALID_BIT = 0x00000001;
-static const XrSpaceLocationFlags XR_SPACE_LOCATION_POSITION_VALID_BIT = 0x00000002;
-static const XrSpaceLocationFlags XR_SPACE_LOCATION_ORIENTATION_TRACKED_BIT = 0x00000004;
-static const XrSpaceLocationFlags XR_SPACE_LOCATION_POSITION_TRACKED_BIT = 0x00000008; */
+	// Flag bits for XrSpaceLocationFlags
+	static const XrSpaceLocationFlags XR_SPACE_LOCATION_ORIENTATION_VALID_BIT = 0x00000001;
+	static const XrSpaceLocationFlags XR_SPACE_LOCATION_POSITION_VALID_BIT = 0x00000002;
+	static const XrSpaceLocationFlags XR_SPACE_LOCATION_ORIENTATION_TRACKED_BIT = 0x00000004;
+	static const XrSpaceLocationFlags XR_SPACE_LOCATION_POSITION_TRACKED_BIT = 0x00000008; */
 
 	// Flag bits similar for XrSpaceLocationFlags
 	enum PlaneSpaceLocationFlags {
@@ -79,7 +76,6 @@ static const XrSpaceLocationFlags XR_SPACE_LOCATION_POSITION_TRACKED_BIT = 0x000
 	};
 
 private:
-
 	// order of members roughly follows XrPlaneDetectorLocationEXT
 	uint64_t plane_id = 0;
 	BitField<PlaneSpaceLocationFlags> plane_space_location_flags = 0;
@@ -97,8 +93,8 @@ protected:
 	static void _bind_methods();
 
 public:
-	OpenXRMlPlaneTracker() = default;
-	OpenXRMlPlaneTracker(XrPlaneDetectorLocationEXT plane_location);
+	OpenXRExtPlaneTracker() = default;
+	OpenXRExtPlaneTracker(XrPlaneDetectorLocationEXT plane_location);
 
 	void set_plane_id(uint64_t p_plane_id);
 	uint64_t get_plane_id() const;
@@ -134,7 +130,6 @@ public:
 };
 } // namespace godot
 
-
-VARIANT_ENUM_CAST(OpenXRMlPlaneTracker::PlaneOrientation)
-VARIANT_ENUM_CAST(OpenXRMlPlaneTracker::PlaneSemanticType)
-VARIANT_BITFIELD_CAST(OpenXRMlPlaneTracker::PlaneSpaceLocationFlags)
+VARIANT_ENUM_CAST(OpenXRExtPlaneTracker::PlaneOrientation)
+VARIANT_ENUM_CAST(OpenXRExtPlaneTracker::PlaneSemanticType)
+VARIANT_BITFIELD_CAST(OpenXRExtPlaneTracker::PlaneSpaceLocationFlags)
