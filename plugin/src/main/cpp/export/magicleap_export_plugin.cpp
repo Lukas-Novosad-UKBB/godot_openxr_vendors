@@ -67,7 +67,7 @@ String MagicleapEditorExportPlugin::_get_android_manifest_element_contents(const
 	}
 
 	// LuNo: added
-	if (ProjectSettings::get_singleton()->get_setting_with_override("xr/openxr/extensions/magic_leap/plane_detection")) {
+	if (ProjectSettings::get_singleton()->get_setting_with_override("xr/openxr/extensions/plane_detection")) {
 		contents += "    <uses-permission android:name=\"com.magicleap.permission.SPATIAL_MAPPING\" />\n";
 	}
 

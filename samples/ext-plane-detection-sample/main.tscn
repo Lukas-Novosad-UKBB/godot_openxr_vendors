@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://rkp4t7eqnc0o" path="res://main.gd" id="1_fsva1"]
 [ext_resource type="PackedScene" uid="uid://ctaejfkxghmda" path="res://plane_tracker_display.tscn" id="5_lquwl"]
 
-[sub_resource type="OpenXRMlPlaneDetectorSettings" id="OpenXRMlPlaneDetectorSettings_lquwl"]
+[sub_resource type="OpenXRExtPlaneDetectorSettings" id="OpenXRExtPlaneDetectorSettings_lquwl"]
 orientation_flags = 15
 semantic_type_flags = 31
 
@@ -18,9 +18,9 @@ transform = Transform3D(0.677077, -0.692092, 0.25015, 0.264251, 0.545897, 0.7950
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=752979072]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.352791, 0)
 
-[node name="OpenXRMlPlaneDetectionManager" type="OpenXRMlPlaneDetectionManager" parent="XROrigin3D" unique_id=128138369]
+[node name="OpenXRExtPlaneDetectionManager" type="OpenXRExtPlaneDetectionManager" parent="XROrigin3D" unique_id=128138369]
 scene = ExtResource("5_lquwl")
 
-[node name="OpenXRMlPlaneDetector" type="OpenXRMlPlaneDetector" parent="XROrigin3D" unique_id=1454967791]
-settings = SubResource("OpenXRMlPlaneDetectorSettings_lquwl")
+[node name="OpenXRExtPlaneDetector" type="OpenXRExtPlaneDetector" parent="XROrigin3D" unique_id=1454967791]
+settings = SubResource("OpenXRExtPlaneDetectorSettings_lquwl")
 detection_enabled = true

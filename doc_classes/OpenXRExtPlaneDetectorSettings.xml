@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class name="OpenXRExtPlaneDetectorSettings" inherits="Resource"
+	experimental="Marked as experimental due to lack of community validation on devices such as the Magic Leap."
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Plane detector settings for the [OpenXRExtPlaneDetector].
+	</brief_description>
+	<description>
+		Plane detector settings for the [OpenXRExtPlaneDetector].
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="orientation_flags" type="int" setter="set_orientation_flags"
+			getter="get_orientations_flags" default="0">
+		The orientations [enum OpenXRExtPlaneTracker.PlaneOrientation] to be detected by the [OpenXRExtPlaneDetector].
+		</member>
+		<member name="semantic_type_flags" type="int" setter="set_semantic_type_flags"
+			getter="get_semantic_type_flags" default="0">
+			The semantic types [enum OpenXRExtPlaneTracker.PlaneSemanticType] to be detected by the [OpenXRExtPlaneDetector].
+		</member>
+		<member name="max_planes" type="int" setter="set_max_planes" getter="get_max_planes"
+			default="50">
+			The maxiumum number of planes to be detected by the [OpenXRExtPlaneDetector].
+		</member>
+		<member name="min_area" type="float" setter="set_min_area" getter="get_min_area"
+			default="0.05">
+			The minimum area in meters [m] of planes to be detected by the [OpenXRExtPlaneDetector].
+		</member>
+	</members>
+
+</class>

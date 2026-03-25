@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  openxr_ml_plane_detection_manager.cpp                                 */
+/*  openxr_ext_plane_detection_manager.cpp                                */
 /**************************************************************************/
 /*                       This file is part of:                            */
 /*                              GODOT XR                                  */
@@ -27,37 +27,37 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "classes/openxr_ml_plane_detection_manager.h"
+#include "classes/openxr_ext_plane_detection_manager.h"
 
 using namespace godot;
 
-void OpenXRMlPlaneDetectionManager::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_scene", "scene"), &OpenXRMlPlaneDetectionManager::set_scene);
-	ClassDB::bind_method(D_METHOD("get_scene"), &OpenXRMlPlaneDetectionManager::get_scene);
+void OpenXRExtPlaneDetectionManager::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_scene", "scene"), &OpenXRExtPlaneDetectionManager::set_scene);
+	ClassDB::bind_method(D_METHOD("get_scene"), &OpenXRExtPlaneDetectionManager::get_scene);
 
-	ClassDB::bind_method(D_METHOD("set_scene_setup_method", "method_name"), &OpenXRMlPlaneDetectionManager::set_scene_setup_method);
-	ClassDB::bind_method(D_METHOD("get_scene_setup_method"), &OpenXRMlPlaneDetectionManager::get_scene_setup_method);
+	ClassDB::bind_method(D_METHOD("set_scene_setup_method", "method_name"), &OpenXRExtPlaneDetectionManager::set_scene_setup_method);
+	ClassDB::bind_method(D_METHOD("get_scene_setup_method"), &OpenXRExtPlaneDetectionManager::get_scene_setup_method);
 
-	ClassDB::bind_method(D_METHOD("set_visible", "visible"), &OpenXRMlPlaneDetectionManager::set_visible);
-	ClassDB::bind_method(D_METHOD("get_visible"), &OpenXRMlPlaneDetectionManager::get_visible);
-	ClassDB::bind_method(D_METHOD("show"), &OpenXRMlPlaneDetectionManager::show);
-	ClassDB::bind_method(D_METHOD("hide"), &OpenXRMlPlaneDetectionManager::hide);
+	ClassDB::bind_method(D_METHOD("set_visible", "visible"), &OpenXRExtPlaneDetectionManager::set_visible);
+	ClassDB::bind_method(D_METHOD("get_visible"), &OpenXRExtPlaneDetectionManager::get_visible);
+	ClassDB::bind_method(D_METHOD("show"), &OpenXRExtPlaneDetectionManager::show);
+	ClassDB::bind_method(D_METHOD("hide"), &OpenXRExtPlaneDetectionManager::hide);
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "scene", PROPERTY_HINT_RESOURCE_TYPE, "PackedScene"), "set_scene", "get_scene");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "scene_setup_method", PROPERTY_HINT_NONE, ""), "set_scene_setup_method", "get_scene_setup_method");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "visible", PROPERTY_HINT_NONE, ""), "set_visible", "get_visible");
 }
 
-void OpenXRMlPlaneDetectionManager::_notification(int p_what) {
+void OpenXRExtPlaneDetectionManager::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_ENTER_TREE: {
 			xr_origin = Object::cast_to<XROrigin3D>(get_parent());
 			XRServer *xr_server = XRServer::get_singleton();
-			xr_server->connect("tracker_added", callable_mp(this, &OpenXRMlPlaneDetectionManager::_on_tracker_added));
-			xr_server->connect("tracker_removed", callable_mp(this, &OpenXRMlPlaneDetectionManager::_on_tracker_removed));
+			xr_server->connect("tracker_added", callable_mp(this, &OpenXRExtPlaneDetectionManager::_on_tracker_added));
+			xr_server->connect("tracker_removed", callable_mp(this, &OpenXRExtPlaneDetectionManager::_on_tracker_removed));
 			Array trackers = xr_server->get_trackers(XRServer::TRACKER_ANCHOR).values();
 			for (int i = 0; i < trackers.size(); i++) {
-				OpenXRMlPlaneTracker *tracker = Object::cast_to<OpenXRMlPlaneTracker>(trackers[i]);
+				OpenXRExtPlaneTracker *tracker = Object::cast_to<OpenXRExtPlaneTracker>(trackers[i]);
 				if (tracker) {
 					_add_tracker(tracker);
 				}
@@ -65,15 +65,15 @@ void OpenXRMlPlaneDetectionManager::_notification(int p_what) {
 		} break;
 		case NOTIFICATION_EXIT_TREE: {
 			XRServer *xr_server = XRServer::get_singleton();
-			xr_server->disconnect("tracker_added", callable_mp(this, &OpenXRMlPlaneDetectionManager::_on_tracker_added));
-			xr_server->disconnect("tracker_removed", callable_mp(this, &OpenXRMlPlaneDetectionManager::_on_tracker_removed));
+			xr_server->disconnect("tracker_added", callable_mp(this, &OpenXRExtPlaneDetectionManager::_on_tracker_added));
+			xr_server->disconnect("tracker_removed", callable_mp(this, &OpenXRExtPlaneDetectionManager::_on_tracker_removed));
 			_cleanup_anchors();
 			xr_origin = nullptr;
 		} break;
 	}
 }
 
-PackedStringArray OpenXRMlPlaneDetectionManager::_get_configuration_warnings() const {
+PackedStringArray OpenXRExtPlaneDetectionManager::_get_configuration_warnings() const {
 	PackedStringArray warnings = Node::_get_configuration_warnings();
 
 	if (is_inside_tree()) {
@@ -86,23 +86,23 @@ PackedStringArray OpenXRMlPlaneDetectionManager::_get_configuration_warnings() c
 	return warnings;
 }
 
-void OpenXRMlPlaneDetectionManager::set_scene(const Ref<PackedScene> &p_scene) {
+void OpenXRExtPlaneDetectionManager::set_scene(const Ref<PackedScene> &p_scene) {
 	scene = p_scene;
 }
 
-Ref<PackedScene> OpenXRMlPlaneDetectionManager::get_scene() const {
+Ref<PackedScene> OpenXRExtPlaneDetectionManager::get_scene() const {
 	return scene;
 }
 
-void OpenXRMlPlaneDetectionManager::set_scene_setup_method(const StringName &p_method) {
+void OpenXRExtPlaneDetectionManager::set_scene_setup_method(const StringName &p_method) {
 	scene_setup_method = p_method;
 }
 
-StringName OpenXRMlPlaneDetectionManager::get_scene_setup_method() const {
+StringName OpenXRExtPlaneDetectionManager::get_scene_setup_method() const {
 	return scene_setup_method;
 }
 
-void OpenXRMlPlaneDetectionManager::set_visible(bool p_visible) {
+void OpenXRExtPlaneDetectionManager::set_visible(bool p_visible) {
 	visible = p_visible;
 
 	for (KeyValue<StringName, Anchor> &E : anchors) {
@@ -114,19 +114,19 @@ void OpenXRMlPlaneDetectionManager::set_visible(bool p_visible) {
 	}
 }
 
-bool OpenXRMlPlaneDetectionManager::get_visible() const {
+bool OpenXRExtPlaneDetectionManager::get_visible() const {
 	return visible;
 }
 
-void OpenXRMlPlaneDetectionManager::show() {
+void OpenXRExtPlaneDetectionManager::show() {
 	set_visible(true);
 }
 
-void OpenXRMlPlaneDetectionManager::hide() {
+void OpenXRExtPlaneDetectionManager::hide() {
 	set_visible(false);
 }
 
-void OpenXRMlPlaneDetectionManager::_add_tracker(const Ref<OpenXRMlPlaneTracker> &p_tracker) {
+void OpenXRExtPlaneDetectionManager::_add_tracker(const Ref<OpenXRExtPlaneTracker> &p_tracker) {
 	ERR_FAIL_COND(!xr_origin);
 	StringName tracker_name = p_tracker->get_tracker_name();
 	ERR_FAIL_COND(anchors.has(tracker_name));
@@ -140,22 +140,22 @@ void OpenXRMlPlaneDetectionManager::_add_tracker(const Ref<OpenXRMlPlaneTracker>
 	anchors[tracker_name] = Anchor(node, p_tracker);
 
 	// LuNo: debug/testing
-	print_line("OpenXRMlPlaneDetectionManager::_add_tracker: Created XRAnchor3D for plane", tracker_name);
+	print_line("OpenXRExtPlaneDetectionManager::_add_tracker: Created XRAnchor3D for plane", tracker_name);
 
 	if (scene.is_valid()) {
 		Node *scene_node = scene->instantiate();
 		node->add_child(scene_node);
 		scene_node->call(scene_setup_method, p_tracker);
 		// LuNo: debug/testing
-		print_line("OpenXRMlPlaneDetectionManager::_add_tracker: Instantiated scene for plane", tracker_name);
+		print_line("OpenXRExtPlaneDetectionManager::_add_tracker: Instantiated scene for plane", tracker_name);
 	}
 	// LuNo: debug/testing
 	else {
-		print_line("OpenXRMlPlaneDetectionManager::_add_tracker: Could NOT instantiate scene for plane", tracker_name);
+		print_line("OpenXRExtPlaneDetectionManager::_add_tracker: Could NOT instantiate scene for plane", tracker_name);
 	}
 }
 
-void OpenXRMlPlaneDetectionManager::_cleanup_anchors() {
+void OpenXRExtPlaneDetectionManager::_cleanup_anchors() {
 	for (KeyValue<StringName, Anchor> &E : anchors) {
 		Node3D *node = Object::cast_to<Node3D>(ObjectDB::get_instance(E.value.node));
 		if (node) {
@@ -169,16 +169,16 @@ void OpenXRMlPlaneDetectionManager::_cleanup_anchors() {
 	anchors.clear();
 }
 
-void OpenXRMlPlaneDetectionManager::_on_tracker_added(const StringName &p_tracker_name, XRServer::TrackerType p_tracker_type) {
-	Ref<OpenXRMlPlaneTracker> tracker = XRServer::get_singleton()->get_tracker(p_tracker_name);
+void OpenXRExtPlaneDetectionManager::_on_tracker_added(const StringName &p_tracker_name, XRServer::TrackerType p_tracker_type) {
+	Ref<OpenXRExtPlaneTracker> tracker = XRServer::get_singleton()->get_tracker(p_tracker_name);
 	if (!tracker.is_valid())
 		return;
 	_add_tracker(tracker);
 }
 
-void OpenXRMlPlaneDetectionManager::_on_tracker_removed(const StringName &p_tracker_name, XRServer::TrackerType p_tracker_type) {
+void OpenXRExtPlaneDetectionManager::_on_tracker_removed(const StringName &p_tracker_name, XRServer::TrackerType p_tracker_type) {
 	// LuNo: debug/testing
-	print_line("OpenXRMlPlaneDetectionManager::_on_tracker_removed: Will remove tracker ", p_tracker_name);
+	print_line("OpenXRExtPlaneDetectionManager::_on_tracker_removed: Will remove tracker ", p_tracker_name);
 	if (anchors.has(p_tracker_name)) {
 		Anchor anchor = anchors[p_tracker_name];
 		Node3D *node = Object::cast_to<Node3D>(ObjectDB::get_instance(anchor.node));
@@ -187,12 +187,12 @@ void OpenXRMlPlaneDetectionManager::_on_tracker_removed(const StringName &p_trac
 			if (parent) {
 				parent->remove_child(node);
 				// LuNo: debug/testing
-				print_line("OpenXRMlPlaneDetectionManager::_on_tracker_removed: removed node from parent");
+				print_line("OpenXRExtPlaneDetectionManager::_on_tracker_removed: removed node from parent");
 			}
 			node->queue_free();
 		}
 		anchors.erase(p_tracker_name);
 		// LuNo: debug/testing
-		print_line("OpenXRMlPlaneDetectionManager::_on_tracker_removed: erased tracker from anchors");
+		print_line("OpenXRExtPlaneDetectionManager::_on_tracker_removed: erased tracker from anchors");
 	}
 }

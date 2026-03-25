@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<class name="OpenXRMlPlaneTracker" inherits="XRPositionalTracker" experimental="Marked as experimental due to lack of community validation on Magic Leap devices." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<class name="OpenXRExtPlaneTracker" inherits="XRPositionalTracker"
+	experimental="Marked as experimental due to lack of community validation on devices such as the Magic Leap."
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-		Represents a plane tracker for the [OpenXRMlPlaneDetector].
+		Represents a plane tracker for the [OpenXRExtPlaneDetector].
 	</brief_description>
 	<description>
-		Represents a plane tracker for the [OpenXRMlPlaneDetector].
+		Represents a plane tracker for the [OpenXRExtPlaneDetector].
 	</description>
 	<tutorials>
 	</tutorials>
@@ -18,7 +21,8 @@
 		</method>
 		<method name="set_plane_space_location_flags">
 			<return type="void" />
-			<param index="0" name="plane_space_location_flags" type="int" enum="OpenXRMlPlaneTracker.PlaneSpaceLocationFlags" is_bitfield="true" default="0"/>
+			<param index="0" name="plane_space_location_flags" type="int"
+				enum="OpenXRExtPlaneTracker.PlaneSpaceLocationFlags" is_bitfield="true" default="0" />
 			<description>
 				Sets the plane's space location flags, which determines whether position and orientation are tracked and whether they are valid.
 				This information must be OR'ed into the passed bit field.				
@@ -54,14 +58,16 @@
 		</method>
 		<method name="set_plane_orientation">
 			<return type="void" />
-			<param index="0" name="plane_orientation" type="int" enum="OpenXRMlPlaneTracker.PlaneOrientation" />
+			<param index="0" name="plane_orientation" type="int"
+				enum="OpenXRExtPlaneTracker.PlaneOrientation" />
 			<description>
 				Sets the plane's orientation.
 			</description>
 		</method>
 		<method name="set_plane_semantic_type">
 			<return type="void" />
-			<param index="0" name="plane_semantic_type" type="int" enum="OpenXRMlPlaneTracker.PlaneSemanticType" />
+			<param index="0" name="plane_semantic_type" type="int"
+				enum="OpenXRExtPlaneTracker.PlaneSemanticType" />
 			<description>
 				Sets the plane's semantic type.
 			</description>
@@ -80,7 +86,8 @@
 			</description>
 		</method>
 		<method name="get_plane_space_location_flags" qualifiers="const">
-			<return type="int" enum="OpenXRMlPlaneTracker.PlaneSpaceLocationFlags" is_bitfield="true"/>
+			<return type="int" enum="OpenXRExtPlaneTracker.PlaneSpaceLocationFlags"
+				is_bitfield="true" />
 			<description>
 				Gets the plane's space location flags, which determines whether position and orientation are tracked and whether they are valid.
 				This information has been OR'ed into the returned bit field.		
@@ -111,13 +118,13 @@
 			</description>
 		</method>
 		<method name="get_plane_orientation" qualifiers="const">
-			<return type="int" enum="OpenXRMlPlaneTracker.PlaneOrientation" />
+			<return type="int" enum="OpenXRExtPlaneTracker.PlaneOrientation" />
 			<description>
 				Gets the plane's orientation.
 			</description>
 		</method>
 		<method name="get_plane_semantic_type" qualifiers="const">
-			<return type="int" enum="OpenXRMlPlaneTracker.PlaneSemanticType" />
+			<return type="int" enum="OpenXRExtPlaneTracker.PlaneSemanticType" />
 			<description>
 				Gets the plane's semantic type.
 			</description>
@@ -136,12 +143,12 @@
 		</method>
 	</methods>
 	<signals>
-		<signal name="openxr_ml_plane_updated">
+		<signal name="openxr_plane_updated">
 			<description>
 				Emitted when the plane is successfully updated.
 			</description>
 		</signal>
-		<signal name="openxr_ml_plane_polygon_updated">
+		<signal name="openxr_plane_polygon_updated">
 			<description>
 				Emitted when one of the plane polygons is successfully updated.
 			</description>
@@ -181,16 +188,20 @@
 		<constant name="PLANE_SEMANTIC_TYPE_MAX_ENUM" value="5" enum="PlaneSemanticType">
 			Maximum value for the plane's semantic type.
 		</constant>
-		<constant name="PLANE_SPACE_LOCATION_ORIENTATION_VALID_BIT" value="1" enum="PlaneSpaceLocationFlags">
+		<constant name="PLANE_SPACE_LOCATION_ORIENTATION_VALID_BIT" value="1"
+			enum="PlaneSpaceLocationFlags">
 			The plane's semantic type is unknown.
 		</constant>
-		<constant name="PLANE_SPACE_LOCATION_POSITION_VALID_BIT" value="2" enum="PlaneSpaceLocationFlags">
+		<constant name="PLANE_SPACE_LOCATION_POSITION_VALID_BIT" value="2"
+			enum="PlaneSpaceLocationFlags">
 			The plane's semantic type is ceiling.
 		</constant>
-		<constant name="PLANE_SPACE_LOCATION_ORIENTATION_TRACKED_BIT" value="4" enum="PlaneSpaceLocationFlags">
+		<constant name="PLANE_SPACE_LOCATION_ORIENTATION_TRACKED_BIT" value="4"
+			enum="PlaneSpaceLocationFlags">
 			The plane's semantic type is floor.
 		</constant>
-		<constant name="PLANE_SPACE_LOCATION_POSITION_TRACKED_BIT" value="8" enum="PlaneSpaceLocationFlags">
+		<constant name="PLANE_SPACE_LOCATION_POSITION_TRACKED_BIT" value="8"
+			enum="PlaneSpaceLocationFlags">
 			The plane's semantic type is wall.
 		</constant>
 	</constants>

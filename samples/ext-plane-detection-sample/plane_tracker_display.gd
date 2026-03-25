@@ -3,10 +3,10 @@ class_name PlaneTrackerDisplay
 
 @onready var description: Label3D = $Description
 @onready var planeMesh: ImmediateMesh = $Plane.mesh
-var tracker_entity: OpenXRMlPlaneTracker
+var tracker_entity: OpenXRExtPlaneTracker
 
 
-func setup_scene(p_tracker: OpenXRMlPlaneTracker):
+func setup_scene(p_tracker: OpenXRExtPlaneTracker):
 	tracker_entity = p_tracker
 
 func _process(deltaTime):
